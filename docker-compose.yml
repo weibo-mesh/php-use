@@ -1,0 +1,30 @@
+version: '2.1'
+
+services:
+  openresty:
+    image: weibocom/weibomesh-lnmp-openresty
+    container_name: openresty
+    volumes:
+      - ./www:/run/www
+      - ./ngx.d:/usr/local/openresty/nginx/conf
+      - ./ngx.d/logs:/usr/local/openresty/nginx/logs
+      - ./weibo-mesh:/run/weibo-mesh
+    working_dir: /run/weibo-mesh
+    command: ./openresty_run.sh
+    ports:
+      - 80:80
+    depends_on:
+      - php
+  
+  php:
+    image: weibocom/weibomesh-lnmp-php-fpm
+    container_name: php
+    volumes:
+      - ./www:/run/www
+      - ./fpm.d:/usr/local/etc/php
+      - ./weibo-mesh:/run/weibo-mesh
+    working_dir: /run/weibo-mesh
+    command: ./php-fpm_run.sh
+    ports:
+      - 9000:9000
+  

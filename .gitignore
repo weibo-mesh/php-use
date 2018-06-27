@@ -1,0 +1,7 @@
+.DS_Store
+.idea
+._*
+weibo-mesh/client
+weibo-mesh/server
+www/vendor
+zj_*
