@@ -1,12 +1,11 @@
-# 如何在 Golang 中使用 Weibo-Mesh
+# 如何在 PHP 中使用 Weibo-Mesh
 
 
 ## 概要
 
-本项目将演示一个在 Golang 中使用 Weibo-Mesh 的推荐使用姿势，主要由 Server、 Client、 Weibo-Mesh 三个部分组成。
+本项目将演示一个在 PHP 中使用 Weibo-Mesh 的推荐使用姿势，主要由 Server、 Client、 Weibo-Mesh 三个部分组成。
 
-Server 中提供了一个 `HelloWorldService` 的 `motan` RPC 服务，Client 在 9999 端口提供了一个 HTTP 服务，这个服务依赖
-Server 提供的 `HelloWorldService` 服务，而服务的调用经由 Weibo-Mesh 完成，组件布局结构如下图。
+组件布局结构如下图。
 
 ![Weibo-Mesh 交互](./Weibo-Mesh.png)
 

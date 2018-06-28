@@ -28,16 +28,16 @@ do_weibo_mesh_hello_world() {
 
     sleep 1
 
-    docker run --rm --name ${ZK_CONTAINER_NAME} \
+    docker run -d --rm --name ${ZK_CONTAINER_NAME} \
     --net weibo-mesh \
     --ip 172.18.0.09 \
-    -d ${ZK_IMAGE}
+    ${ZK_IMAGE}
 
     sleep 2
 
 
     MOTAN_CONF_NAME=$1
-    docker run --rm --name ${PHP_CONTAINER_NAME} \
+    docker run -d --rm --name ${PHP_CONTAINER_NAME} \
     -v ${BASE_DIR}/www:/run/www \
     -v ${BASE_DIR}/fpm.d:/usr/local/etc/php \
     -v ${BASE_DIR}/weibo-mesh:/run/weibo-mesh \
@@ -47,11 +47,11 @@ do_weibo_mesh_hello_world() {
     --ip 172.18.0.10 \
     --link ${ZK_CONTAINER_NAME}:zookeeper \
     -p 9000:9000 \
-    ${PHP_FPM_IMAGE} /run/weibo-mesh/php-fpm_run.sh &
+    ${PHP_FPM_IMAGE} /run/weibo-mesh/php-fpm_run.sh
 
     sleep 1
 
-    docker run --rm --name ${OR_CONTAINER_NAME} \
+    docker run -d --rm --name ${OR_CONTAINER_NAME} \
     -v ${BASE_DIR}/www:/run/www \
     -v ${BASE_DIR}/ngx.d:/usr/local/openresty/nginx/conf \
     -v ${BASE_DIR}/ngx.d/logs:/usr/local/openresty/nginx/logs \
@@ -62,7 +62,7 @@ do_weibo_mesh_hello_world() {
     --ip 172.18.0.20 \
     -p 80:80 \
     --link=${PHP_CONTAINER_NAME}:php \
-    ${OPENRESTY_IMAGE} /run/weibo-mesh/openresty_run.sh &
+    ${OPENRESTY_IMAGE} /run/weibo-mesh/openresty_run.sh
 }
 
 dc_clean() {

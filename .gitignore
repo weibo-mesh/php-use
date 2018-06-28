@@ -3,5 +3,6 @@
 ._*
 weibo-mesh/client
 weibo-mesh/server
+ngx.d/logs
 www/vendor
 zj_*
