@@ -21,6 +21,16 @@ OR_CONTAINER_NAME=openresty
 ZK_IMAGE=zookeeper
 ZK_CONTAINER_NAME=weibo-mesh-zk
 
+init_composer() {
+    DO=install
+    if [ ! -z $1 ]; then
+        DO=$1
+    fi
+    docker run --rm -it -v ${BASE_DIR}/www:/app \
+    --user $(id -u):$(id -g) \
+    composer ${DO}
+}
+
 do_weibo_mesh_hello_world() {
     if [ -z "$(docker network ls --format {{.Name}} |grep -e '^weibo-mesh$')" ]; then
         docker network create --subnet=172.18.0.0/16 weibo-mesh
@@ -74,10 +84,18 @@ dc_clean() {
 if [ $# != 0 ]; then
     if [ $1 == "x" ]; then
         dc_clean
+    elif [ $1 == "-i" ]; then
+        if [ ! -z $2 ]; then
+            init_composer $2
+        else
+            init_composer
+        fi
+        
     elif [ $1 == "-h" ]; then
         echo "
         ./run.sh                                run hello world demo
         ./run.sh x                              clean the container and network
+        ./run.sh -i                             run composer install
         ./run.sh -h                             show this help
         "
     fi
