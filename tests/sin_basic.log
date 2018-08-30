@@ -1,6 +1,0 @@
-
----- EXPECTED OUTPUT
-===DONE===
----- ACTUAL OUTPUT
-Parse error: syntax error, unexpected '$number' (T_VARIABLE), expecting ',' or ';' in /Users/idevz/code/z/git/weibo-mesh/php-use/tests/sin_basic.php on line 6
----- FAILED
